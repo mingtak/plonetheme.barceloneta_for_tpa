@@ -10,14 +10,121 @@
   <notheme css:if-not-content="#visual-portal-wrapper" />
 
 <rules if="$is_anonymous">
-<!-- logo -->
-<copy attributes="href" css:content="a#portal-logo" css:theme="h1.logo a" />
-<copy attributes="src" css:content="a#portal-logo img" css:theme="h1.logo a img" />
+  <!-- logo -->
+  <copy attributes="href" css:content="a#portal-logo" css:theme="h1.logo a" />
+  <copy attributes="src" css:content="a#portal-logo img" css:theme="h1.logo a img" />
+
+  <!-- nav -->
+        <replace theme-children="//nav/ul[@id='mainMenu']" content-children="//ul[@id='portal-globalnav']" />
+          <replace content-children="//ul[@id='portal-globalnav']/li[@class='selected']">
+            <xsl:attribute name="class">dropdown active</xsl:attribute>
+            <xsl:apply-templates />
+          </replace>
+          <replace content-children="//ul[@id='portal-globalnav']/li[@class='plain']">
+            <xsl:attribute name="class">dropdown</xsl:attribute>
+            <xsl:apply-templates />
+          </replace>
+          <replace content-children="//ul[@id='portal-globalnav']/li/a">
+            <xsl:attribute name="class">dropdown-toggle</xsl:attribute>
+            <xsl:apply-templates />
+          </replace>
+          <replace content-children="//ul[@id='portal-globalnav']/li/ul">
+            <xsl:attribute name="class">dropdown-menu</xsl:attribute>
+            <xsl:apply-templates />
+          </replace>
+
+  <!-- content -->
+  <replace css:theme="div#content div.container div.row div.col-md-8"
+           css:content="article#content" />
 
 
-<!-- drop -->
-<drop css:theme="div.social-icons"/>
 
+        <!-- sidebar -->
+        <replace css:theme-children="div#plone-sidebar" css:content="aside#portal-column-one" />
+        <drop css:content="div#portal-column-two" />
+
+          <!-- portlet -->
+          <replace css:content="div.portletWrapper">
+            <section class="toggle active">
+              <label><xsl:value-of select=".//header" /></label>
+              <div class="toggle-content">
+
+                <!-- 轉 ul list -->
+
+
+                <xsl:for-each css:select="section.portlet">
+                  <xsl:copy-of select=".//section[@class = 'portletContent']">
+
+                  <ul class="nav nav-list primary push-bottom">
+<!--                    <xsl:for-each css:select="li">
+                      <li>
+                        <a>
+                          <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
+                          <xsl:value-of select=".//a" />
+                        </a>
+                      </li>
+                    </xsl:for-each> -->
+                  </ul>
+</xsl:copy-of>
+
+                </xsl:for-each>
+
+
+                <!-- ad portlet -->
+                <xsl:for-each select=".//dd[@class = 'ad-portlet']">
+                  <a target="_blank">
+                    <xsl:attribute name="href"><xsl:value-of select=".//a/@href"/></xsl:attribute>
+                    <xsl:attribute name="title"><xsl:value-of select=".//a/@title"/></xsl:attribute>
+                    <xsl:attribute name="alt"><xsl:value-of select=".//a/@title"/></xsl:attribute>
+                    <img style="width:100%;margin-bottom:5px">
+                      <xsl:attribute name="src"><xsl:value-of select=".//a/img/@src"/></xsl:attribute>
+                      <xsl:attribute name="title"><xsl:value-of select=".//a/img/@alt"/></xsl:attribute>
+                      <xsl:attribute name="alt"><xsl:value-of select=".//a/img/@alt"/></xsl:attribute>
+                    </img>
+                  </a>
+                </xsl:for-each>
+
+                <!-- static portlet -->
+<!--                <xsl:for-each css:select="section.portlet">
+                  <xsl:copy-of select=".//section[@class = 'portletContent']" />
+                </xsl:for-each>
+-->
+
+
+
+
+                <!-- marquee portlet -->
+                <xsl:for-each select=".//div[@class = 'marquee_page']">
+                  <marquee direction="up" scrollamount="2" height="200"><xsl:copy-of select=".//dd" /></marquee>
+                </xsl:for-each>
+
+                <!-- quick upload -->
+                <xsl:for-each css:select="dl.portlet.QuickUploadPortlet">
+                    <dl class="portlet QuickUploadPortlet">
+                      <xsl:copy-of select="./dd" />
+                    </dl>
+                </xsl:for-each>
+              </div>
+            </section>
+
+          </replace>
+
+
+
+
+
+
+
+
+
+  <!-- copyright -->
+  <replace css:theme="div.footer-copyright div.container div.row"
+           css:content="footer#portal-footer-wrapper div.row" />
+
+
+  <!-- drop -->
+  <drop css:theme="div.social-icons"/>
+  <drop css:theme="nav ul.nav.nav-pills.nav-top" />
 </rules>
 
 
