@@ -73,8 +73,7 @@
             <label>
               <xsl:value-of select="."/>
             </label>
-
-<div class="toggle-content"></div>
+             <xsl:copy-of select=".//div"/>
           </section>
         </replace>
 

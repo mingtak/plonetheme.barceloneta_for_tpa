@@ -1,1 +1,22 @@
 /* Add here all your CSS customizations */
+/* table {
+    width: 100%;
+    max-width: 100%;
+    border: 2px solid #e5e5e5;
+} */
+
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #bababa;
+}
+
+.portletNavigationTree .portletContent > ul > li > ul a {
+    padding-left: 40px;
+    background-image: url("../img/dot.png");
+    background-position: 25px 17px;
+}
