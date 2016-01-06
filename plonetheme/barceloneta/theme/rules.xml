@@ -10,6 +10,13 @@
   <notheme css:if-not-content="#visual-portal-wrapper" />
 
 <rules if="$is_anonymous">
+
+  <!-- title -->
+  <replace css:theme="html head title" css:content="html head title" />
+
+  <!-- language tab -->
+  <replace css:content-children="div#language_tab" css:theme="nav ul.nav.nav-pills.nav-top" />
+
   <!-- logo -->
   <copy attributes="href" css:content="a#portal-logo" css:theme="h1.logo a" />
   <copy attributes="src" css:content="a#portal-logo img" css:theme="h1.logo a img" />
@@ -33,89 +40,84 @@
             <xsl:apply-templates />
           </replace>
 
+  <!-- addthis -->
+  <before css:theme-children="div#content div.container div.row div.col-md-9"
+           css:content="#addthiscode" />
+
+  <!-- documentFirstHeading -->
+  <before css:theme-children="div#content div.container div.row div.col-md-9"
+          css:content="h1.documentFirstHeading" />
+
   <!-- content -->
-  <replace css:theme="div#content div.container div.row div.col-md-8"
-           css:content="article#content" />
-
-
+  <replace css:theme-children="div#content div.container div.row div.col-md-9"
+           css:content="#content-core" />
+  <replace css:theme="div#content div.slider-container"
+           css:content-children="#viewlet_hero_slider" />
+  <before css:theme-children="div#content div.container div.row div.col-md-9"
+           css:content="#viewlet_banner_slider" />
+<!--  <drop css:content="article#content header" />
+-->
 
         <!-- sidebar -->
         <replace css:theme-children="div#plone-sidebar" css:content="aside#portal-column-one" />
         <drop css:content="div#portal-column-two" />
 
-          <!-- portlet -->
-          <replace css:content="div.portletWrapper">
-            <section class="toggle active">
-              <label><xsl:value-of select=".//header" /></label>
-              <div class="toggle-content">
-
-                <!-- 轉 ul list -->
+        <replace css:content-children="aside#portal-column-one ul">
+            <xsl:attribute name="class">nav nav-list primary push-bottom</xsl:attribute>
+            <xsl:apply-templates />
+        </replace>
 
 
-                <xsl:for-each css:select="section.portlet">
-                  <xsl:copy-of select=".//section[@class = 'portletContent']">
+        <replace css:content="aside#portal-column-one header">
+          <section class="toggle active">
+            <label>
+              <xsl:value-of select="."/>
+            </label>
 
-                  <ul class="nav nav-list primary push-bottom">
-<!--                    <xsl:for-each css:select="li">
-                      <li>
-                        <a>
-                          <xsl:attribute name="href"><xsl:value-of select=".//a/@href" /></xsl:attribute>
-                          <xsl:value-of select=".//a" />
-                        </a>
-                      </li>
-                    </xsl:for-each> -->
-                  </ul>
-</xsl:copy-of>
-
-                </xsl:for-each>
-
-
-                <!-- ad portlet -->
-                <xsl:for-each select=".//dd[@class = 'ad-portlet']">
-                  <a target="_blank">
-                    <xsl:attribute name="href"><xsl:value-of select=".//a/@href"/></xsl:attribute>
-                    <xsl:attribute name="title"><xsl:value-of select=".//a/@title"/></xsl:attribute>
-                    <xsl:attribute name="alt"><xsl:value-of select=".//a/@title"/></xsl:attribute>
-                    <img style="width:100%;margin-bottom:5px">
-                      <xsl:attribute name="src"><xsl:value-of select=".//a/img/@src"/></xsl:attribute>
-                      <xsl:attribute name="title"><xsl:value-of select=".//a/img/@alt"/></xsl:attribute>
-                      <xsl:attribute name="alt"><xsl:value-of select=".//a/img/@alt"/></xsl:attribute>
-                    </img>
-                  </a>
-                </xsl:for-each>
-
-                <!-- static portlet -->
-<!--                <xsl:for-each css:select="section.portlet">
-                  <xsl:copy-of select=".//section[@class = 'portletContent']" />
-                </xsl:for-each>
--->
+<div class="toggle-content"></div>
+          </section>
+        </replace>
 
 
 
-
-                <!-- marquee portlet -->
-                <xsl:for-each select=".//div[@class = 'marquee_page']">
-                  <marquee direction="up" scrollamount="2" height="200"><xsl:copy-of select=".//dd" /></marquee>
-                </xsl:for-each>
-
-                <!-- quick upload -->
-                <xsl:for-each css:select="dl.portlet.QuickUploadPortlet">
-                    <dl class="portlet QuickUploadPortlet">
-                      <xsl:copy-of select="./dd" />
-                    </dl>
-                </xsl:for-each>
-              </div>
-            </section>
-
-          </replace>
+        <!-- infomation (portal message), tag dl and tag div -->
+<!--        <before css:theme-children="div.col-md-9" css:content="dl.portalMessage" /> -->
+<!--        <drop css:content="#kssPortalMessage" /> -->
+        <replace content="//dl[contains(@class, 'portalMessage')]">
+            <div>
+                <xsl:attribute name="class">
+                    <xsl:choose>
+                        <xsl:when test="@class='portalMessage info'">alert alert-info</xsl:when>
+                        <xsl:when test="@class='portalMessage warning'">alert alert-warning</xsl:when>
+                        <xsl:when test="@class='portalMessage error'">alert alert-danger</xsl:when>
+                        <xsl:otherwise>alert alert-info</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+                <strong><xsl:value-of select="./dt" />： </strong>
+                <xsl:copy-of select="./dd" />
+            </div>
+        </replace>
+        <replace content="//div[contains(@class, 'portalMessage')]">
+            <div>
+                <xsl:attribute name="class">
+                    <xsl:choose>
+                        <xsl:when test="@class='portalMessage info'">alert alert-info</xsl:when>
+                        <xsl:when test="@class='portalMessage warning'">alert alert-warning</xsl:when>
+                        <xsl:when test="@class='portalMessage error'">alert alert-danger</xsl:when>
+                        <xsl:otherwise>alert alert-info</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+                <xsl:copy-of select="." />
+            </div>
+        </replace>
 
 
 
 
 
 
-
-
+  <!-- search box -->
+  <replace css:theme="div.search" css:content="div.search" />
 
   <!-- copyright -->
   <replace css:theme="div.footer-copyright div.container div.row"
@@ -124,7 +126,8 @@
 
   <!-- drop -->
   <drop css:theme="div.social-icons"/>
-  <drop css:theme="nav ul.nav.nav-pills.nav-top" />
+  <drop theme="//footer[@id='footer']/div[@class='container']"/>     <!-- if="$portal_id != 'TPA'" />-->
+  <strip css:theme="footer#footer div.footer-copyright"/>  <!-- if="$portal_id != 'TPA'"/>-->
 </rules>
 
 
