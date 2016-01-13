@@ -40,6 +40,13 @@
             <xsl:apply-templates />
           </replace>
 
+<!-- path-bar, id="portal-breadcrumbs" -->
+  <before css:content="#portal-breadcrumbs"
+          css:theme-children="div.body div.main div#content div.container div.row div.col-md-9" if-not-path="/"/>
+
+
+
+
   <!-- addthis -->
   <before css:theme-children="div#content div.container div.row div.col-md-9"
            css:content="#addthiscode" />
