@@ -69,12 +69,14 @@
 
 
         <replace css:content="aside#portal-column-one header">
-          <section class="toggle active">
+
+             <xsl:copy-of select=".//section[contains(@class, 'toggle')]"/>
+<!--          <section class="toggle active">
             <label>
               <xsl:value-of select="."/>
             </label>
              <xsl:copy-of select=".//div"/>
-          </section>
+          </section> -->
         </replace>
 
 
