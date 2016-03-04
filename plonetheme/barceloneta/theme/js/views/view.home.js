@@ -40,7 +40,7 @@ Version: 		2.0
 				var slider = $(this);
 
 				var defaults = {
-					delay: 9000,
+					delay: 5000,
 					startheight: 495,
 					startwidth: 960,
 
