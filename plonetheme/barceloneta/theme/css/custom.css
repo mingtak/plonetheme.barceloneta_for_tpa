@@ -12,7 +12,11 @@ table {
 }
 
 table, th, td {
-    border: 1px solid #bababa;
+    border: 1px solid #bbb;
+}
+
+div#parent-fieldname-text table, th, td {
+    border: 1px solid #fff;
 }
 
 .portletNavigationTree .portletContent > ul > li > ul a {
