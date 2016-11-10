@@ -5,6 +5,14 @@
     border: 2px solid #e5e5e5;
 } */
 
+header div.search input.search:first-child {
+    width: 120px;
+}
+
+header nav ul.nav-top li a {
+    padding: 6px 10px;
+}
+
 table {
     width: 100%;
     max-width: 100%;
