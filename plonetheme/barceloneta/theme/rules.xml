@@ -136,7 +136,7 @@
   <drop css:theme="div.social-icons"/>
   <drop theme="//footer[@id='footer']/div[@class='container']"/>     <!-- if="$portal_id != 'TPA'" />-->
   <strip css:theme="footer#footer div.footer-copyright"/>  <!-- if="$portal_id != 'TPA'"/>-->
-  <drop css:theme="nav ul.nav.nav-pills.nav-top" if="$is_notes"/>
+<!--  <drop css:theme="nav ul.nav.nav-pills.nav-top" if="$is_notes"/> -->
   <drop css:theme="header" attributes="style" if-not="$is_notes"/>
   <drop css:content="h1.documentFirstHeading" if="$is_history_tp" />
 </rules>
